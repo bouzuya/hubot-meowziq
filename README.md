@@ -13,10 +13,10 @@ or
 ## Example
 
     bouzuya> hubot help meowziq
-      hubot> hubot meowziq play - play meowziq
-             hubot meowziq skip - skip meowziq
-             hubot meowziq status - show meowziq status
-             hubot meowziq stop - stop meowziq
+      hubot> hubot [meowziq] play - play meowziq
+             hubot [meowziq] skip - skip meowziq
+             hubot [meowziq] status - show meowziq status
+             hubot [meowziq] stop - stop meowziq
 
     bouzuya> hubot meowziq play
       hubot> OK
