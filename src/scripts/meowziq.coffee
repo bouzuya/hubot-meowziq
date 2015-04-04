@@ -2,14 +2,15 @@
 #   A Hubot script for meowziq
 #
 # Configuration:
-#   HUBOT_MEOWZIQ_URL
+#   HUBOT_MEOWZIQ_MEOWBOT
 #   HUBOT_MEOWZIQ_ROOM
+#   HUBOT_MEOWZIQ_URL
 #
 # Commands:
-#   hubot meowziq play - play meowziq
-#   hubot meowziq skip - skip meowziq
-#   hubot meowziq status - show meowziq status
-#   hubot meowziq stop - stop meowziq
+#   hubot [meowziq] play - play meowziq
+#   hubot [meowziq] skip - skip meowziq
+#   hubot [meowziq] status - show meowziq status
+#   hubot [meowziq] stop - stop meowziq
 #
 # Author:
 #   bouzuya <m@bouzuya.net>
@@ -18,6 +19,7 @@ parseConfig = require 'hubot-config'
 request = require 'request-b'
 
 config = parseConfig 'meowziq',
+  meowbot: null
   url: null
   room: null
   interval: '5000'
@@ -44,7 +46,8 @@ module.exports = (robot) ->
       .then (-> watch robot), (-> watch robot)
     , INTERVAL
 
-  robot.respond /meowziq play/, (res) ->
+  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'play'
+  robot.respond pattern, (res) ->
     message = null
     request
       method: 'PATCH'
@@ -55,7 +58,8 @@ module.exports = (robot) ->
       result = if r.statusCode is 200 then 'OK' else 'ERROR'
       res.send result
 
-  robot.respond /meowziq skip/, (res) ->
+  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'skip'
+  robot.respond pattern, (res) ->
     message = null
     request
       method: 'PATCH'
@@ -66,7 +70,8 @@ module.exports = (robot) ->
       result = if r.statusCode is 200 then 'OK' else 'ERROR'
       res.send result
 
-  robot.respond /meowziq status/, (res) ->
+  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'status'
+  robot.respond pattern, (res) ->
     message = null
     request config.url + '/status'
     .then (r) ->
@@ -83,7 +88,8 @@ module.exports = (robot) ->
     .then ->
       res.send message
 
-  robot.respond /meowziq stop/, (res) ->
+  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'stop'
+  robot.respond pattern, (res) ->
     message = null
     request
       method: 'PATCH'
