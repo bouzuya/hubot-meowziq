@@ -34,10 +34,10 @@ module.exports = (robot) ->
 
   watch = (robot) ->
     setTimeout ->
-      request config.url + '/songs'
+      request config.url + '/status'
       .then (r) ->
         json = JSON.parse r.body
-        song = json[0]
+        song = json.song
         return unless song?
         return if playing is song.title
         playing = song.title
