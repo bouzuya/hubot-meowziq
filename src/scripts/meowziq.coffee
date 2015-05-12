@@ -8,6 +8,7 @@
 #
 # Commands:
 #   hubot [meowziq] play - play meowziq
+#   hubot [meowziq] shuffle - shuffle meowziq
 #   hubot [meowziq] skip - skip meowziq
 #   hubot [meowziq] status - show meowziq status
 #   hubot [meowziq] stop - stop meowziq
@@ -55,6 +56,20 @@ module.exports = (robot) ->
       url: config.url + '/status'
       form:
         text: 'play'
+    .then (r) ->
+      result = if r.statusCode is 200 then 'OK' else 'ERROR'
+      res.send result
+
+  pattern = new RegExp prefix + 'shuffle'
+  robot.respond pattern, (res) ->
+    request config.url + '/status'
+    .then (r) ->
+      json = JSON.parse r.body
+      request
+        method: 'PATCH'
+        url: config.url + '/status'
+        form:
+          shuffle: !json.shuffle
     .then (r) ->
       result = if r.statusCode is 200 then 'OK' else 'ERROR'
       res.send result
