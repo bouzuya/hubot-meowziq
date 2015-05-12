@@ -105,6 +105,7 @@ module.exports = (robot) ->
       .map (i, index) ->
         "\n[#{index}]: #{i.artist ? 'unknown'} - #{i.title ? 'unknown'}"
       .join ''
+      message += '\n...' if json.length > 10
     .then ->
       res.send message
 
