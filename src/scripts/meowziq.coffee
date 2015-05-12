@@ -29,6 +29,7 @@ module.exports = (robot) ->
     robot.logger.warning 'hubot-meowziq: configuration error'
     return
 
+  prefix = if config.meowbot then '' else 'meowziq '
   INTERVAL = parseInt config.interval, 10
   playing = null
 
@@ -46,7 +47,7 @@ module.exports = (robot) ->
       .then (-> watch robot), (-> watch robot)
     , INTERVAL
 
-  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'play'
+  pattern = new RegExp prefix + 'play'
   robot.respond pattern, (res) ->
     message = null
     request
@@ -58,7 +59,7 @@ module.exports = (robot) ->
       result = if r.statusCode is 200 then 'OK' else 'ERROR'
       res.send result
 
-  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'skip'
+  pattern = new RegExp prefix + 'skip'
   robot.respond pattern, (res) ->
     message = null
     request
@@ -70,7 +71,7 @@ module.exports = (robot) ->
       result = if r.statusCode is 200 then 'OK' else 'ERROR'
       res.send result
 
-  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'status'
+  pattern = new RegExp prefix + 'status'
   robot.respond pattern, (res) ->
     message = null
     request config.url + '/status'
@@ -88,7 +89,7 @@ module.exports = (robot) ->
     .then ->
       res.send message
 
-  pattern = new RegExp (if config.meowbot then '' else 'meowziq ') + 'stop'
+  pattern = new RegExp prefix + 'stop'
   robot.respond pattern, (res) ->
     message = null
     request
