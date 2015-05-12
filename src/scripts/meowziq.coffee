@@ -92,7 +92,11 @@ module.exports = (robot) ->
     request config.url + '/status'
     .then (r) ->
       json = JSON.parse r.body
-      message = ":scream_cat: meowziq :scream_cat: status is #{json.text}"
+      message = """
+        :scream_cat: meowziq :scream_cat:
+        status  : #{json.text}
+        shuffle : #{json.shuffle}
+      """
       request config.url + '/songs'
     .then (r) ->
       json = JSON.parse r.body
